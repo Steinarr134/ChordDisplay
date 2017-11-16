@@ -49,7 +49,7 @@ if __name__ == '__main__':
             # print(in_current_folder)
             ts.clear_songs()
             if current_path == usbpath:
-                things = ["Browse"]
+                things = []
                 things_fullname = []
             else:
                 things = ["../"]
@@ -78,3 +78,5 @@ if __name__ == '__main__':
                         ts.main()
                     else:
                         current_path = picked
+
+# This was done in guitatparty branch
