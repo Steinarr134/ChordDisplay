@@ -403,7 +403,7 @@ class TextScreen(object):
                 elif event.type == DISPEVENT:
                     # print "DISPEVENT REceived"
                     self.Screen.fill(self.bg)
-                    render = my_rect_placer(event.message, self.Rect, self.fg, self.bg, fonttype="monospace ")
+                    render = my_rect_placer(event.message, self.Rect, self.fg, self.bg, fonttype="monospace")
                     self.Screen.blit(render, (self.BoundaryWidth, self.BoundaryWidth))
                     pygame.display.flip()
         return False

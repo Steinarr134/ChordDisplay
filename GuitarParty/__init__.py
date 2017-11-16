@@ -1,0 +1,1 @@
+from .GuitarPartyCode import guitarparty

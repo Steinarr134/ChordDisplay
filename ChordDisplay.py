@@ -6,6 +6,7 @@ import time
 import pygame
 import os
 import sys
+from GuitarParty import guitarparty
 
 #sys.stderr = open("stderr.txt", 'a')
 #sys.stdout = open("stdout.txt", 'w+')
@@ -42,15 +43,15 @@ if __name__ == '__main__':
         while not done:
             if not os.path.exists(usbpath):
                 current_path = str(usbpath)
-                done = ts.wait_for(lambda: os.path.exists(usbpath), "Insert Usb named SongDrive to start")
+                done = ts.wait_for(lambda: os.path.exists(usbpath), "Insert usb to start")
                 if done:
                     break
             in_current_folder = os.listdir(current_path)
             # print(in_current_folder)
             ts.clear_songs()
             if current_path == usbpath:
-                things = []
-                things_fullname = []
+                things = ["--Browse Guitarparty--"]
+                things_fullname = ["GuitarParty"]
             else:
                 things = ["../"]
                 things_fullname = [current_path[:current_path.rfind("/")]]
@@ -73,10 +74,10 @@ if __name__ == '__main__':
                     break
                 else:
                     picked = things_fullname[picked_i]
+                    if picked == "GuitarParty"
+                        guitarparty(ts)
                     if ".song" in picked:
                         ts.display(Song(picked))
                         ts.main()
                     else:
                         current_path = picked
-
-# This was done in guitatparty branch
