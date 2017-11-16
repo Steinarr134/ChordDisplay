@@ -1,7 +1,7 @@
 import sqlite3
 import os
 
-db_full_path = "/media/pi/SONGDRIVE/songs.db"
+db_full_path = "/media/usb/songs.db"
 
 
 def db_exists():

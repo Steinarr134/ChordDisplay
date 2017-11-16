@@ -7,12 +7,12 @@ import pygame
 import os
 import sys
 
-sys.stderr = open("stderr.txt", 'a')
-sys.stdout = open("stdout.txt", 'w+')
+#sys.stderr = open("stderr.txt", 'a')
+#sys.stdout = open("stdout.txt", 'w+')
 
 # print os.curdir
 
-usbpath = "/media/pi/SONGDRIVE"
+usbpath = "/media/usb/"
 current_path = str(usbpath)
 # usbpath = "C:\Users\SteinarrHrafn\PycharmProjects\ChordDisplay\TestFolder"
 
@@ -49,7 +49,7 @@ if __name__ == '__main__':
             # print(in_current_folder)
             ts.clear_songs()
             if current_path == usbpath:
-                things = []
+                things = ["Browse"]
                 things_fullname = []
             else:
                 things = ["../"]
@@ -64,7 +64,7 @@ if __name__ == '__main__':
                     things.append("/" + thing)
                     things_fullname.append(current_path + "/" + thing)
             if len(things) > 0:
-                print(things)
+                print(things, things_fullname)
                 picked_i = ts.pick_thing(things)
                 if not os.path.exists(usbpath):
                     continue

@@ -15,6 +15,17 @@ AllChords = [["C"],
              ["Bb", "A#"],
              ["B", "H"]]
 
+def get_chord_i_and_l(s):
+    # print("looking for ", s)
+    l = 1
+    if s[1] == "#" or s[1] == "b":
+        l = 2
+    for i, versions in enumerate(AllChords):
+        for version in versions:
+            if s[:l] == version:
+                return (i, l)
+
+
 Chords = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "Bb", "B"]
 
 
@@ -45,12 +56,8 @@ def chord_translate(line, from_key, to_key):
     while "%" in line:
         where = line.find("%")
         # print "changing: {} at {}".format(line, where)
-
-        for i, chord in enumerate(Chords):
-            if chord in line[where: where+3]:
-                # print "\t replacing {} with {}".format(chord, Chords[(i+diff) % 12])
-                line = line[:where] + " " + Chords[(i+diff) % 12] + line[where + 1 + len(chord):]
-                break
+        i, l = get_chord_i_and_l(line[where + 1: where + 4])
+        line = line[:where] + " " + Chords[(i+diff) % 12] + line[where + 1 + l:]
 
     # print "result={}".format(line)
     return line
