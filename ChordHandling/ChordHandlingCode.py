@@ -31,12 +31,43 @@ class SongPart(object):
 
 
 class Song(object):
-    def __init__(self, filename):
-        self.FileName = filename
+    def __init__(self):
         self.Parts = []
-        self.Name = self.FileName.split('/')[-1].split('.')[0]
+        self.Name = None
+        self.FileName = None
         self.CurrentPart = 0
         self.Key = Chords[0]
+
+    def current(self):
+        return self.Parts[self.CurrentPart].get_in_key(self.Key)
+
+    def next(self):
+        # print self.CurrentPart
+        self.CurrentPart = min(len(self.Parts)-1, self.CurrentPart + 1)
+        # print self.CurrentPart
+        return self.Parts[self.CurrentPart].get_in_key(self.Key)
+
+    def previous(self):
+        self.CurrentPart = max(0, self.CurrentPart - 1)
+        return self.Parts[self.CurrentPart].get_in_key(self.Key)
+
+    def set_key(self, newkey):
+        if newkey in Chords:
+            self.Key = newkey
+            if self.FileName is not None:
+                write_default_key_to_db(self.FileName, newkey)
+
+    def change_key_by(self, c):
+        p = Chords.index(self.Key)
+        newkey = Chords[(p + c) % 12]
+        self.set_key(newkey)
+
+
+class FileSong(Song):
+    def __init__(self, filename):
+        Song.__init__(self)
+        self.FileName = filename
+        self.Name = self.FileName.split('/')[-1].split('.')[0]
         self.load_parts()
 
     def load_parts(self):
@@ -70,30 +101,7 @@ class Song(object):
             self.Key = starting_key
             write_default_key_to_db(self.FileName, starting_key)
 
-    def current(self):
-        return self.Parts[self.CurrentPart].get_in_key(self.Key)
-
-    def next(self):
-        # print self.CurrentPart
-        self.CurrentPart = min(len(self.Parts)-1, self.CurrentPart + 1)
-        # print self.CurrentPart
-        return self.Parts[self.CurrentPart].get_in_key(self.Key)
-
-    def previous(self):
-        self.CurrentPart = max(0, self.CurrentPart - 1)
-        return self.Parts[self.CurrentPart].get_in_key(self.Key)
-
-    def set_key(self, newkey):
-        if newkey in Chords:
-            self.Key = newkey
-            write_default_key_to_db(self.FileName, newkey)
-
-    def change_key_by(self, c):
-        p = Chords.index(self.Key)
-        newkey = Chords[(p + c) % 12]
-        self.set_key(newkey)
-
 
 if __name__ == '__main__':
-    skapa = Song("..\\TestFiles\\Skapa.txt")
+    skapa = FileSong("..\\TestFiles\\Skapa.txt")
     print(skapa.Parts[0].get())

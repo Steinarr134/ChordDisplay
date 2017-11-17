@@ -15,25 +15,20 @@ AllChords = [["C"],
              ["Bb", "A#"],
              ["B", "H"]]
 
+
 def get_chord_i_and_l(s):
     # print("looking for ", s)
     l = 1
-    if s[1] == "#" or s[1] == "b":
+    if len(s) > 1 and (s[1] == "#" or s[1] == "b"):
         l = 2
     for i, versions in enumerate(AllChords):
         for version in versions:
             if s[:l] == version:
                 return (i, l)
+    raise TypeError("I don't think {} is a valid chord".format(s))
 
 
 Chords = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "Bb", "B"]
-
-
-def _chord_number(key):
-    for i, chord in enumerate(Chords):
-        if key == chord:
-            # print "key: {} is number {}".format(key, i)
-            return i
 
 
 def clean_chord(chord):
@@ -49,8 +44,8 @@ def chord_translate(line, from_key, to_key):
     if "%" not in line:
         return line
     # print "Translating {} from {} to {}".format(line, from_key, to_key)
-    startkeynr = _chord_number(from_key)
-    endkeynr = _chord_number(to_key)
+    startkeynr = get_chord_i_and_l(from_key)[0]
+    endkeynr = get_chord_i_and_l(to_key)[0]
     diff = endkeynr - startkeynr
     # print "start:{}  end:{}   diff:{}".format(startkeynr, endkeynr, diff)
     while "%" in line:

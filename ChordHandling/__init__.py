@@ -1,1 +1,1 @@
-from .ChordHandlingCode import Song, Chords
+from .ChordHandlingCode import FileSong, Song, Chords

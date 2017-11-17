@@ -1,8 +1,8 @@
 import sqlite3
 import os
 
-db_full_path = "/media/usb/songs.db"
-
+# db_full_path = "/media/usb/songs.db"
+db_full_path = "C:\\Users\SteinarrHrafn\Documents\GitHub\ChordDisplay\TestFolder\songs.db"
 
 def db_exists():
     return os.path.exists(db_full_path)

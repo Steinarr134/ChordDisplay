@@ -1,7 +1,13 @@
-from ChordHandling.ChordFunctions import *
+from ChordHandling.ChordFunctions import clean_chord
 
-def translate_and_write(text, filename):
-    parts = text.split('\r\n\r\n')
+
+def translate_to_parts(text):
+    text = text.replace('\t', "    ")
+    if '\r' in text:
+        parts = text.split('\r\n\r\n')
+    else:
+        parts = text.split('\n\n')
+
     transparts = [""]
 
     part_i = 1
@@ -28,7 +34,10 @@ def translate_and_write(text, filename):
         # transparts[part_i] += "=================\n"
         part_i += 1
         # print("=========")
+    return transparts
 
+def translate_and_write(text, filename):
+    transparts = translate_to_parts(text)
     with open("Jolene.song", 'w+') as f:
         for part in transparts:
             f.write(part)

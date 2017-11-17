@@ -109,7 +109,7 @@ def my_rect_placer(text, rect, fg, bg, fonttype=None, justification=0, underscor
         # print l
         if l > longest_line_width:
             longest_line_width = l
-    #print(lines)
+    # print(lines)
     if longest_line_width > rect.size[0]:
         fontsize = int((rect.size[0]/float(longest_line_width))*fontsize)
         #print("longest line is {} side and width is {}, changing fontsize to {}".format(longest_line_width, rect.size[0], fontsize))
@@ -124,7 +124,8 @@ def my_rect_placer(text, rect, fg, bg, fonttype=None, justification=0, underscor
     for i, line in enumerate(lines):
         font.set_underline(i in underscore_line_nrs)
         if accumulatedHeight + font.size(line)[1] >= rect.height:
-            raise Exception("Once word-wrapped, the text string ({}) was too tall to fit in the rect({}).".format(line, (rect.height, rect.width)))
+            raise Exception("Once word-wrapped, the text string '{}' was too tall to fit in the rect({})."
+                            "".format(line, (rect.height, rect.width)))
         if line != "":
             tempSurface = font.render(line.strip('\r'), 1, fg)
         if justification == 0:
@@ -219,10 +220,9 @@ class TextScreen(object):
         done = False
         selected = int(selected)
         n = len(things)
-        goingdown = True
         maxlines = 10
-        start_i = selected
-        stop_i = min(maxlines, n)
+        stop_i = min(selected + maxlines, n)
+        start_i = max(0, stop_i - maxlines)
         while not done:
             songnamelist = []
             underscored = [selected - start_i]
