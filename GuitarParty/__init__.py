@@ -1,1 +1,1 @@
-from .GuitarPartyCode import guitarparty
+from .GuitarPartyCode import guitarparty, guitarparty_available

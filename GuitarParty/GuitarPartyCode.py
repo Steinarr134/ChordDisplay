@@ -1,4 +1,19 @@
 from .SongBooks import get_songbooks
+import socket
+
+
+def guitarparty_available():
+    try:
+        # see if we can resolve the host name -- tells us if there is
+        # a DNS listening
+        host = socket.gethostbyname("guitarparty.com")
+        # connect to the host -- tells us if the host is actually
+        # reachable
+        s = socket.create_connection((host, 80), 2)
+        return True
+    except socket.error as e:
+        print(e)
+    return False
 
 
 def guitarparty(ts):

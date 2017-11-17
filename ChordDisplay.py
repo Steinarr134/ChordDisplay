@@ -4,7 +4,7 @@ from daGUI import TextScreen, EventModule, BUTTONEVENT
 import pygame
 import os
 import sys
-from GuitarParty import guitarparty
+from GuitarParty import guitarparty, guitarparty_available
 
 # sys.stderr = open("stderr.txt", 'a')
 # sys.stdout = open("stdout.txt", 'w+')
@@ -18,6 +18,8 @@ current_path = str(usbpath)
 files_to_ignore = ["System Volume Information"]
 
 if __name__ == '__main__':
+    offer_guitarparty = guitarparty_available()
+
 
     def button_callback(button):
         print("Button: ", button)
@@ -47,8 +49,12 @@ if __name__ == '__main__':
             # print(in_current_folder)
             ts.clear_songs()
             if current_path == usbpath:
-                things = ["--Browse Guitarparty--"]
-                things_fullname = ["GuitarParty"]
+                if offer_guitarparty:
+                    things = ["--Browse Guitarparty--"]
+                    things_fullname = ["GuitarParty"]
+                else:
+                    things = []
+                    things_fullname = []
             else:
                 things = ["../"]
                 things_fullname = [current_path[:current_path.rfind("/")]]
